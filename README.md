@@ -49,18 +49,127 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[byte5](https://byte5.de)**
 - **[OP.GG](https://op.gg)**
 
-## Contributing
+## Calculator App
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Welcome to the Calculator App, a simple web-based calculator with basic arithmetic operations and a calculation history feature.
 
-## Code of Conduct
+### Features
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Perform addition, subtraction, multiplication, and division.
+- View and clear calculation history.
+- Responsive and user-friendly interface.
 
-## Security Vulnerabilities
+### Getting Started
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Follow these steps to set up and run the Calculator App on your local machine.
 
-## License
+#### Prerequisites
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [PHP](https://www.php.net/) installed on your machine.
+- [Composer](https://getcomposer.org/) installed for managing dependencies.
+- [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for managing frontend assets.
+- [Docker](https://www.docker.com/) (optional, for running in a Docker environment).
+
+#### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/your-username/calculator-app.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd calculator-app
+    ```
+
+3. Install PHP dependencies:
+
+    ```bash
+    composer install
+    ```
+
+4. Install Laravel Breeze for authentication:
+
+    ```bash
+    composer require laravel/breeze --dev
+    php artisan breeze:install
+    ```
+
+    Follow the instructions provided by Laravel Breeze to complete the setup.
+
+5. Install frontend dependencies:
+
+    ```bash
+    npm install
+    ```
+
+6. Copy the `.env.example` file to `.env`:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+7. Generate application key:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+8. Configure your database connection in the `.env` file.
+
+9. Run database migrations:
+
+    ```bash
+    php artisan migrate
+    ```
+
+10. Build frontend assets:
+
+    ```bash
+    npm run dev
+    ```
+
+#### Usage
+
+1. Start the development server:
+
+    ```bash
+    php artisan serve
+    ```
+
+2. Access the application in your browser at [http://localhost:8000](http://localhost:8000).
+
+3. Perform calculations, view history, and enjoy using the Calculator App!
+
+#### API Endpoints
+
+- **POST /api/calculator/calculate**: Store a calculation.
+- **GET /api/calculator/history**: Retrieve the calculation history.
+
+#### Docker (Optional)
+
+If you prefer running the application in a Docker environment:
+
+1. Build the Docker image:
+
+    ```bash
+    docker build -t calculator-app .
+    ```
+
+2. Run the Docker container:
+
+    ```bash
+    docker run -p 8080:80 calculator-app
+    ```
+
+3. Access the application in your browser at [http://localhost:8080](http://localhost:8080).
+
+### Contributing
+
+Feel free to contribute to the development of the Calculator App. Please follow the contribution guidelines outlined in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
