@@ -88,78 +88,52 @@
 </div>
 
 <script>
-    // function appendToDisplay(value) {
-    //     document.getElementById('display').innerText += value;
-    // }
-    //
-    // function calculateResult() {
-    //     const expression = document.getElementById('display').innerText;
-    //     const result = eval(expression);
-    //
-    //     document.getElementById('display').innerText = result;
-    // }
-    //
-    // function clearLast() {
-    //     let currentDisplay = document.getElementById('display').innerText;
-    //     document.getElementById('display').innerText = currentDisplay.slice(0, -1);
-    // }
-
-    function appendToDisplay(value) {
+    async function appendToDisplay(value) {
         document.getElementById('display').innerText += value;
     }
 
-    function calculateResult() {
+    async function calculateResult() {
         const expression = document.getElementById('display').innerText;
 
-        // Send expression to the server for calculation
-        fetch('/api/calculate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ expression }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('display').innerText = data.result;
+        try {
+            await fetch('/api/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    expression: expression,
+                }),
+            });
 
-                // After calculating, update the history
-                updateHistory();
-            })
-            .catch(error => console.error('Error:', error));
+            const resultResponse = await fetch(`/api/calculate?expression=${encodeURIComponent(expression)}`);
+            const resultData = await resultResponse.json();
+
+            document.getElementById('display').innerText = resultData.result;
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
-    function updateHistory() {
-        // Fetch the calculation history from the server
-        fetch('/api/history', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Update the history list on the page
-                const historyList = document.querySelector('.history ul');
-                historyList.innerHTML = '';
-
-                data.history.forEach(calculation => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = `${calculation.expression} = ${calculation.result}`;
-                    historyList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    function clearLast() {
+    async function clearLast() {
         let currentDisplay = document.getElementById('display').innerText;
         document.getElementById('display').innerText = currentDisplay.slice(0, -1);
     }
 
-    // Initial load of the history when the page loads
-    updateHistory();
+    async function fetchHistory() {
+        try {
+            const userId = {{ auth()->id() ?? 'null' }};
+            const historyResponse = await fetch(`/api/history/${userId}`);
+            const historyData = await historyResponse.json();
+
+            console.log('Calculation History:', historyData.history);
+        } catch (error) {
+            console.error('Error fetching history:', error);
+        }
+    }
+
+    fetchHistory();
 </script>
 </body>
 </html>

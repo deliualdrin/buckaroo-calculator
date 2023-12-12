@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-    Route::post('calculate', [CalculatorController::class, 'store'])->name('calculator.store');
 
-    Route::get('history', [CalculatorController::class, 'history'])->name('calculator.history');
+Route::post('calculate', [CalculatorController::class, 'calculate']);
+
+Route::get('history/{user}', [CalculatorController::class, 'history']);

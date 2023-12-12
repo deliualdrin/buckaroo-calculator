@@ -11,7 +11,9 @@ class HistoryRequest extends FormRequest
 {
     public function authorize()
     {
-        return Auth::check() && $this->route('user') == Auth::id();
+        $user = $this->route('user');
+
+        return Auth::check() && $user && $user == Auth::id();
     }
 
     public function rules()

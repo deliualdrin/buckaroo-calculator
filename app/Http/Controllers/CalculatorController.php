@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CalculationRequest;
+use App\Http\Requests\HistoryRequest;
 use App\Models\User;
 use App\Services\CalculationService;
 
